@@ -1,0 +1,15 @@
+* .emacs.d-light
+Extra lightweight configuration to use in cluster settings without X.
+
+Many configurations are taken shamelessly from [[https://github.com/seagle0128/.emacs.d][seagle]]. Many thanks to him!
+
+** Installation
+#+BEGIN_SRC bash
+git clone --depth 1 https://github.com/guanyilun/.emacs.d-light ~/.emacs.d
+#+END_SRC
+
+** External package included
+- helm
+- magit
+- company
+- yasnippets
