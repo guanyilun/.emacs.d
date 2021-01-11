@@ -36,7 +36,8 @@
                                (python . t)
                                (js . t)
                                (css . t)
-                               (C . t)))
+                               (C . t)
+                               (shell . t)))
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
 
