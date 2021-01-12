@@ -113,6 +113,7 @@
 (require 'init-python)
 (require 'init-org)
 (require 'init-roam)
+(require 'init-tex)
 (require 'init-lisp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
