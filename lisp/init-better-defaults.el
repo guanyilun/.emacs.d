@@ -111,6 +111,18 @@
 (require 'nano-help)
 (require 'nano-splash)
 
+;; pyim
+(use-package pyim
+  :init
+  (require 'pyim)
+  (require 'pyim-basedict)
+  (pyim-basedict-enable))
+
+;; auto save
+(require 'auto-save)
+(auto-save-enable)
+(setq auto-save-silent t)   ; quietly save
+
 (provide 'init-better-defaults)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-better-defaults.el ends here
