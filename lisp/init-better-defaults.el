@@ -123,6 +123,12 @@
 (auto-save-enable)
 (setq auto-save-silent t)   ; quietly save
 
+;; Automatically reload files was modified by external program
+(use-package autorevert
+  :ensure nil
+  :diminish
+  :hook (after-init . global-auto-revert-mode))
+
 (provide 'init-better-defaults)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-better-defaults.el ends here

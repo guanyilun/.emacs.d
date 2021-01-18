@@ -37,7 +37,18 @@
            (helm-rg-default-extra-args rg-opts)
            (helm-rg-default-directory org-roam-directory))
       (helm-rg nil nil org-roam-directory)))
-  )
+
+  ;; deft for org-roam
+  (use-package deft
+    :bind (("C-c n d" . deft))
+    :commands (deft)
+    :config
+    (setq deft-extensions '("org" "bib" "txt")
+          deft-directory org-roam-directory
+          deft-recursive t
+          deft-use-filename-as-title t))
+
+  (use-package helm-rg))
 
 ;; helm-org-rifle will mostly be used with roam so it makes sense that i put it here
 (use-package helm-org-rifle

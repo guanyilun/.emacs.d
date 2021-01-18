@@ -60,14 +60,6 @@
   :hook (after-init . yas-global-mode)
   :config (use-package yasnippet-snippets))
 
-;; yasniper -> dependency of yasniper which i use
-(use-package helm-org-rifle)
-
-(use-package yasniper
-  :ensure nil
-  :load-path "~/.emacs.d/site-lisp"
-  :bind ("C-c y" . yasniper))
-
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
@@ -181,13 +173,22 @@
          :map mc/keymap
          ("C-x |" . mc/vertical-align-with-space)))
 
-;; BUI for user interface
-(use-package bui)
+;; Minor mode to aggressively keep your code always indented
+(use-package aggressive-indent
+  :diminish
+  :hook ((after-init . global-aggressive-indent-mode)
+         ;; FIXME: Disable in big files due to the performance issues
+         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+         (find-file . (lambda ()
+                        (if (> (buffer-size) (* 3000 80))
+                            (aggressive-indent-mode -1)))))
+  :config
+  ;; Disable in some modes
+  (dolist (mode '(web-mode html-mode css-mode))
+    (push mode aggressive-indent-excluded-modes))
 
-;; Use s library for string manipulation in lisp
-(use-package s
-  :ensure nil
-  :load-path "~/.emacs.d/site-lisp/s/")
+  ;; Disable in some commands
+  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t))
 
 (provide 'init-programming)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
