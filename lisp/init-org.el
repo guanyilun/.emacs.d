@@ -17,7 +17,12 @@
               ;; attachment
               org-attach-dir-relative   t
               org-src-fontify-natively  t
-              org-src-tab-acts-natively t)
+              org-src-tab-acts-natively t
+              ;; inline image size default
+              ;; for image specific setting use
+              ;; #+ATTR_ORG: :width 400
+              org-image-actual-width '(400)
+              org-attach-auto-tag nil)
   :config
   ;; latex support
   (require 'ox-latex)
@@ -68,7 +73,18 @@
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+  ;; org download
+  (use-package org-download
+    :bind (("C-S-y" . org-download-clipboard))
+    :config
+    (setq org-download-method 'directory
+          org-download-image-org-width 400)
+    (defun org-download--dir-2 ()
+      "Return the current filename instead of heading name"
+      (file-name-base (buffer-file-name)))
+    (add-hook 'dired-mode-hook 'org-download-enable)))
 
 (provide 'init-org)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
