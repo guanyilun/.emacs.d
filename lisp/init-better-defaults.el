@@ -129,6 +129,8 @@
   :diminish
   :hook (after-init . global-auto-revert-mode))
 
+(setq visible-bell 1)
+
 (provide 'init-better-defaults)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-better-defaults.el ends here
