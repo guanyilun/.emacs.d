@@ -63,7 +63,9 @@
   (defun my/helm-org-rifle--store-link (candidate)
     "Store link into CANDIDATE."
     (-let (((buffer . pos) candidate))
-      (with-current-buffer buffer
+      ;; find-file-noselect is to prevent problems from inserting link
+      ;; from a closed buffer
+      (with-current-buffer (find-file-noselect (buffer-file-name buffer))
         (goto-char pos)
         (call-interactively 'org-store-link))))
 
