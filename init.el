@@ -110,7 +110,6 @@
 (require 'init-better-defaults)
 (require 'init-helm)
 (require 'init-programming)
-(require 'init-python)
 (require 'init-org)
 (require 'init-roam)
 (require 'init-tex)
