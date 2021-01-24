@@ -46,6 +46,10 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
 
+  ;; toggle fragment when leaving the src block
+  (use-package org-fragtog
+    :hook (org-mode . org-fragtog-mode))
+
   ;; org equation live preview
   (use-package org-elp
     :ensure nil
@@ -84,8 +88,12 @@
     (defun org-download--dir-2 ()
       "Return the current filename instead of heading name"
       (file-name-base (buffer-file-name)))
-    (add-hook 'dired-mode-hook 'org-download-enable)))
+    (add-hook 'dired-mode-hook 'org-download-enable))
+
+  ;; always use evince to open pdf
+  (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")
+  )
 
 (provide 'init-org)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; end of init-org
+
+;;; end of init-org
