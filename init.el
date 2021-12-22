@@ -32,9 +32,6 @@
 ;;
 ;;; Code:
 
-(when (version< emacs-version "25.1")
-  (error "This requires Emacs 25.1 and above!"))
-
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
@@ -60,53 +57,7 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
-;; Packages
-;; Without this comment Emacs25 adds (package-initialize) here
-(setq package-archives
-      '(("melpa" . "http://melpa.org/packages/")
-        ("gnu" . "http://elpa.gnu.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")))
-
-;; Initialize packages
-(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
-  (setq package-enable-at-startup nil)          ; To prevent initializing twice
-  (package-initialize))
-
-;; Setup `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-;; Should set before loading `use-package'
-(eval-and-compile
-  (setq use-package-always-ensure t)
-  (setq use-package-always-defer t)
-  (setq use-package-expand-minimally t)
-  (setq use-package-enable-imenu-support t))
-
-;; Required by `use-package'
-(use-package diminish)
-(use-package bind-key)
-
-;; Environment
-(use-package exec-path-from-shell
-  :init
-  (setq exec-path-from-shell-check-startup-files nil
-        exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH")
-        exec-path-from-shell-arguments '("-l"))
-  (exec-path-from-shell-initialize))
-
-;; Start server
-(use-package server
-  :ensure nil
-  :hook (after-init . my-server-start)
-  :config
-  (defun my-server-start ()
-    "Only start server when server is not running"
-    (unless (or (server-running-p) (daemonp))
-      (server-start))))
-
+(require 'init-base)
 (require 'init-better-defaults)
 (require 'init-helm)
 (require 'init-programming)

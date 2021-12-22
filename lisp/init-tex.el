@@ -22,7 +22,7 @@
   :hook (org-mode . turn-on-org-cdlatex))
 
 (require 'ox-latex)
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.2)
       org-latex-prefer-user-labels t)
 
 ;; toggle fragment when leaving the src block
@@ -46,7 +46,7 @@
 ;; Enlarge tex fragments at the same time as text scale
 (defun update-org-latex-fragment-scale ()
   (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
-    (plist-put org-format-latex-options :scale (* 1.5 text-scale-factor)))
+    (plist-put org-format-latex-options :scale (* 1.2 text-scale-factor)))
   )
 (add-hook 'text-scale-mode-hook 'update-org-latex-fragment-scale)
 

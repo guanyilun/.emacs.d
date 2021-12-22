@@ -190,6 +190,9 @@
   ;; Disable in some commands
   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t))
 
+;; julia mode
+(use-package julia-mode)
+
 (provide 'init-programming)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-programming.el ends here

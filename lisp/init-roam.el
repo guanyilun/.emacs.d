@@ -16,6 +16,7 @@
                ("C-c n f" . org-roam-find-file)
                ("C-c n g" . org-roam-graph)
                ("C-c n r" . org-roam-random-note)
+               ("C-c n c" . org-roam-capture)
                ("C-c n o" . my/org-roam-knowledge-search))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))
