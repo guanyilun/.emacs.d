@@ -114,6 +114,6 @@
 (require 'init-roam)
 (require 'init-tex)
 (require 'init-lisp)
-
+(require 'init-publish)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

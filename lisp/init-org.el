@@ -54,7 +54,11 @@
     (add-hook 'dired-mode-hook 'org-download-enable))
 
   ;; always use evince to open pdf
-  (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s"))
+  (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")
+
+  (use-package ox-reveal
+    :config
+    (require 'ox-reveal)))
 
 (provide 'init-org)
 
