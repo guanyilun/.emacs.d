@@ -75,12 +75,25 @@
 (use-package ebib
   :init
   (global-set-key (kbd "C-c e") 'ebib)
+  :bind (:map ebib-index-mode-map
+              ("A" . my/ebib-browse-adsurl))
   :config
   (setq ebib-preload-bib-files '("~/Documents/knowledge-base/bib/citation.bib")
-        ebib-notes-default-file "~/Documents/knowledge-base/org/papers.org"))
-
-(use-package ebib
-  :init
-  (global-set-key (kbd "C-c e") 'ebib))
+        ebib-notes-default-file "~/Documents/knowledge-base/org/papers.org")
+  (defun my/ebib-browse-adsurl (&optional arg)
+    "Browse the URL in the \"adsurl\" field.
+If the \"adsurl\" field contains more than one URL, ask the user
+which one to open.  Alternatively, the user can provide a numeric
+prefix argument ARG."
+    (interactive "P")
+    (ebib--execute-when
+     (entries
+      (let ((urls (ebib-get-field-value "adsurl" (ebib--get-key-at-point) ebib--cur-db 'noerror 'unbraced 'xref)))
+        (if urls
+            (ebib--call-browser (ebib--select-url urls (if (numberp arg) arg nil)))
+          (error "[Ebib] No URL found in adsurl field"))))
+     (default
+       (beep))))
+  )
 
 (provide 'init-tex)
