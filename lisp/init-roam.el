@@ -10,23 +10,28 @@
 
 ;; the variable org-roam-directory needs to be customized
 (use-package org-roam
-  :init (add-hook 'after-init-hook 'org-roam-mode)
-  :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n g" . org-roam-graph)
-               ("C-c n r" . org-roam-random-note)
-               ("C-c n c" . org-roam-capture)
-               ("C-c n o" . my/org-roam-knowledge-search))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))
-              (("C-c n I" . org-roam-insert-immediate)))
+  :ensure t
+  :bind (
+         (("C-c n l" . org-roam-buffer-toggle)
+          ("C-c n f" . org-roam-node-find)
+          ("C-c n g" . org-roam-graph)
+          ("C-c n r" . org-roam-random-note)
+          ("C-c n c" . org-roam-capture)
+          ("C-c n o" . my/org-roam-knowledge-search))
+         :map org-mode-map
+         (("C-c n i" . org-roam-node-insert)))
   :config
+  (org-roam-db-autosync-mode)
   (org-add-link-type "ebib" 'ebib)
 
+  ;; (use-package org-roam-bibtex
+  ;;   :ensure t)
+  ;; ;; (use-package org-roam-bibtex
+  ;; ;;   :ensure t
+  ;; ;;   :hook (org-roam-mode . org-roam-bibtex-mode))
   (use-package org-roam-bibtex
-    :hook (org-roam-mode . org-roam-bibtex-mode))
-
+    :after org-roam)
+  
   (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
@@ -52,6 +57,14 @@
           deft-recursive t
           deft-use-filename-as-title t))
 
-  (use-package helm-rg))
+  (use-package helm-rg)
+  )
+
+(use-package org-roam-ui
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 (provide 'init-roam)
