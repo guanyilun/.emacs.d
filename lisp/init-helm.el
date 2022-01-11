@@ -68,6 +68,28 @@
   (helm-autoresize-mode 1)
   (helm-mode 1))
 
+(use-package helm-rg
+  :after helm)
+
+(use-package helm-recoll
+  :commands helm-recoll
+  :bind
+  (("C-c n O" . my/helm-recoll))
+  :init
+  (helm-recoll-create-source "main" "~/.recoll")  ;; only need to run once
+  (setq helm-debug t)
+  :config
+  ;; (helm :sources 'helm-source-recoll-main)
+  (defun my/helm-recoll ()
+    (interactive)
+    (helm :sources 'helm-source-recoll-main)))
+
+(use-package helm-google
+  :bind (("C-h g" . helm-google))
+  :config
+  ;;(setq browse-url-browser-function 'eww-browse-url)
+  )
+
 (provide 'init-helm)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
