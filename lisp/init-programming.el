@@ -167,8 +167,8 @@
 
 ;; Multiple cursors
 (use-package multiple-cursors
-  :bind (("C-x >"           . mc/mark-next-like-this)
-         ("C-x <"           . mc/mark-previous-like-this)
+  :bind (("C->"           . mc/mark-next-like-this)
+         ("C-<"           . mc/mark-previous-like-this)
          ("C-c C-x <"       . mc/mark-all-like-this)
          :map mc/keymap
          ("C-x |" . mc/vertical-align-with-space)))
@@ -190,8 +190,35 @@
   ;; Disable in some commands
   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t))
 
-;; julia mode
+;; julia
 (use-package julia-mode)
+(use-package julia-repl)
+
+(use-package smart-region
+  :hook (after-init . smart-region-on))
+
+(use-package isend-mode)
+
+(use-package code-cells
+  :bind (:map code-cells-mode-map
+              ("M-n" . code-cells-forward-cell)
+              ("M-p" . code-cells-backward-cell)
+              ("C-c C-;" . code-cells-comment-or-uncomment)
+              ("C-c <return>" . my/code-cells-isend)
+              ("C-c C-c" . code-cells-eval))
+  :config
+  (let ((map code-cells-mode-map))
+    (define-key map "n" (code-cells-speed-key 'code-cells-forward-cell))
+    (define-key map "p" (code-cells-speed-key 'code-cells-backward-cell))
+    (define-key map "e" (code-cells-speed-key 'code-cells-eval))
+    (define-key map (kbd "TAB") (code-cells-speed-key 'outline-cycle)))
+
+  ;; send code using isend
+  (defun my/code-cells-isend ()
+    (interactive)
+    (code-cells-mark-cell)
+    (isend-send))
+  )
 
 (provide 'init-programming)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
