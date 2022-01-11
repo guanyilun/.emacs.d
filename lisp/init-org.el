@@ -118,7 +118,10 @@ prepended to the element after the #+HEADER: tag."
   ;; see https://github.com/jkitchin/org-ref/blob/master/org-ref.org
   ;; for more information
   (use-package org-ref
-    :init (require 'org-ref))
+    :init
+    (require 'org-ref)
+    (require 'org-ref-arxiv)
+    (require 'org-ref-bibtex))
   
   ;; org download
   (use-package org-download
