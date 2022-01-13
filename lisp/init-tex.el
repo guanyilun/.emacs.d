@@ -78,8 +78,18 @@
   :bind (:map ebib-index-mode-map
               ("A" . my/ebib-browse-adsurl))
   :config
+  (defun my/ebib-file-name (key)
+    (substring (ebib-get-field-value "eprint" key ebib--cur-db) 1 -1))
+
   (setq ebib-preload-bib-files '("~/Documents/knowledge-base/bib/citation.bib")
-        ebib-notes-default-file "~/Documents/knowledge-base/org/papers.org")
+        ebib-notes-default-file "~/Documents/knowledge-base/org/papers.org"
+        ;; ebib-file-associations '(("pdf" . "okular")) ;;
+        ebib-file-associations nil
+        ebib-reading-list-file "~/Dropbox/org/reading.org"
+        ebib-file-search-dirs '("~/Documents/knowledge-base/papers/")
+        ebib-name-transform-function 'my/ebib-file-name
+        )
+
   (defun my/ebib-browse-adsurl (&optional arg)
     "Browse the URL in the \"adsurl\" field.
 If the \"adsurl\" field contains more than one URL, ask the user
@@ -87,13 +97,12 @@ which one to open.  Alternatively, the user can provide a numeric
 prefix argument ARG."
     (interactive "P")
     (ebib--execute-when
-     (entries
-      (let ((urls (ebib-get-field-value "adsurl" (ebib--get-key-at-point) ebib--cur-db 'noerror 'unbraced 'xref)))
-        (if urls
-            (ebib--call-browser (ebib--select-url urls (if (numberp arg) arg nil)))
-          (error "[Ebib] No URL found in adsurl field"))))
-     (default
-       (beep))))
-  )
+      (entries
+       (let ((urls (ebib-get-field-value "adsurl" (ebib--get-key-at-point) ebib--cur-db 'noerror 'unbraced 'xref)))
+         (if urls
+             (ebib--call-browser (ebib--select-url urls (if (numberp arg) arg nil)))
+           (error "[Ebib] No URL found in adsurl field"))))
+      (default
+        (beep)))))
 
 (provide 'init-tex)
