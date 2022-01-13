@@ -197,7 +197,34 @@
 (use-package smart-region
   :hook (after-init . smart-region-on))
 
-(use-package isend-mode)
+(use-package isend-mode
+  ;; :ensure nil
+  ;; :load-path "~/.emacs.d/site-lisp/isend-mode.el"
+  ;; :config
+  ;; (require 'isend-mode)
+  :config
+  (defun my/isend--region-seed ()
+    "Return a 'seed' of the region to be sent.
+The result is a cons cell of the form (beg . end)"
+    (cond
+     ;; If the region is active, use region boundaries
+     ((use-region-p)
+      (cons (region-beginning)
+            (- (region-end) 1)))
+
+     ;; If the region is not active and `isend-skip-empty-lines' is non-nil,
+     ;; move forward to the first non-empty line.
+     (isend-skip-empty-lines
+      (goto-char (line-beginning-position))
+      (skip-chars-forward "[:space:]\n")
+      (cons (point)
+            (point)))
+
+     ;; Otherwise, use current point
+     (t
+      (cons (point)
+            (point)))))
+  (advice-add 'isend--region-seed :override #'my/isend--region-seed))
 
 (use-package code-cells
   :bind (:map code-cells-mode-map
